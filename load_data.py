@@ -326,10 +326,10 @@ def process_true_boxes(true_boxes, anchors, image_width, image_height):
     # convert bounding box coords and localize bounding box
     for i, box in enumerate(true_boxes):
         # convert box coords to x, y, w, h and convert to grids coord
-        w = (box[2] - box[0]) / scale
-        h = (box[3] - box[1]) / scale    
-        x = ((box[0] + box[2]) / 2) / scale
-        y = ((box[1] + box[3]) / 2) / scale
+        w = IMAGE_W * (box[2] - box[0]) / scale
+        h = IMAGE_H * (box[3] - box[1]) / scale    
+        x = IMAGE_W * ((box[0] + box[2]) / 2) / scale
+        y = IMAGE_H * ((box[1] + box[3]) / 2) / scale
         true_boxes_grid[i,...] = np.array([x, y, w, h, box[4]])
         if w * h > 0: # box exists
             # calculate iou between box and each anchors and find best anchors

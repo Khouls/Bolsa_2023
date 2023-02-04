@@ -1,6 +1,8 @@
 import tensorflow as tf
 import glob
 import os
+from definitions import *
+import numpy as np
 
 # gradients
 def grad(model, img, detector_mask, matching_true_boxes, class_one_hot, true_boxes, loss_function, training=True):
@@ -76,7 +78,7 @@ def train(epochs, model, train_dataset, val_dataset, steps_per_epoch_train, step
         # train
         for batch_idx in range(steps_per_epoch_train): 
             img, detector_mask, matching_true_boxes, class_one_hot, true_boxes =  next(train_dataset)
-            loss, _, grads = grad(model, img, detector_mask, matching_true_boxes, class_one_hot, true_boxes)
+            loss, _, grads = grad(model, img, detector_mask, matching_true_boxes, class_one_hot, true_boxes, loss_function)
             optimizer.apply_gradients(zip(grads, model.trainable_variables))
             epoch_loss.append(loss)
             print('-', end='')
@@ -84,7 +86,7 @@ def train(epochs, model, train_dataset, val_dataset, steps_per_epoch_train, step
         # val
         for batch_idx in range(steps_per_epoch_val): 
             img, detector_mask, matching_true_boxes, class_one_hot, true_boxes =  next(val_dataset)
-            loss, sub_loss, grads = grad(model, img, detector_mask, matching_true_boxes, class_one_hot, true_boxes, training=False)
+            loss, sub_loss, grads = grad(model, img, detector_mask, matching_true_boxes, class_one_hot, true_boxes, loss_function, training=False)
             epoch_val_loss.append(loss)
             epoch_val_sub_loss.append(sub_loss)
             print('-', end='')

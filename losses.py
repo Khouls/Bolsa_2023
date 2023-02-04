@@ -1,7 +1,8 @@
 import numpy as np
-import tensorflow.keras.backend as K
+import tensorflow as tf
 import tensorflow.keras.backend as K
 import matplotlib.pyplot as plt
+from definitions import *
 
 LAMBDA_NOOBJECT  = 1
 LAMBDA_OBJECT    = 5
@@ -68,13 +69,14 @@ def hbb_yolov2_loss(detector_mask, matching_true_boxes, class_one_hot, true_boxe
     anchors = anchors.reshape(len(anchors) // 2, 2)
     
     # grid coords tensor
+    
     coord_x = tf.cast(tf.reshape(tf.tile(tf.range(GRID_W), [GRID_H]), (1, GRID_H, GRID_W, 1, 1)), tf.float32)
     coord_y = tf.transpose(coord_x, (0,2,1,3,4))
     coords = tf.tile(tf.concat([coord_x,coord_y], -1), [y_pred.shape[0], 1, 1, 5, 1])
     
     # coordinate loss
     pred_xy = K.sigmoid(y_pred[:,:,:,:,0:2]) # adjust coords between 0 and 1
-    pred_xy = (pred_xy + coords) # add cell coord for comparaison with ground truth. New coords in grid cell unit
+    pred_xy = (pred_xy + coords) # add cell coord for comparison with ground truth. New coords in grid cell unit
     pred_wh = K.exp(y_pred[:,:,:,:,2:4]) * anchors # adjust width and height for comparaison with ground truth. New coords in grid cell unit
     #pred_wh = (pred_wh * anchors) # unit : grid cell
     nb_detector_mask = K.sum(tf.cast(detector_mask > 0.0, tf.float32))

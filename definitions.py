@@ -9,7 +9,7 @@ val_annot_folder = 'annotations/validation'
 
 LABELS           = ('class')
 CLASS            = len(LABELS)
-IMAGE_H, IMAGE_W = 512, 512
+IMAGE_H, IMAGE_W = 512, 512 
 GRID_H,  GRID_W  = 16, 16 # GRID size = IMAGE size / 32
 BOXES_CELL       = 5
 NUM_CLASSES      = len(LABELS)
