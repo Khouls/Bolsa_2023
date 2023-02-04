@@ -27,7 +27,7 @@ def log_loss(loss, val_loss, step):
 
 
 # training
-def train(epochs, model, train_dataset, val_dataset, steps_per_epoch_train, steps_per_epoch_val, train_name = 'train'):
+def train(epochs, model, train_dataset, val_dataset, steps_per_epoch_train, steps_per_epoch_val, loss_function, train_name = 'train'):
     '''
     Train YOLO model for n epochs.
     Eval loss on training and validation dataset.

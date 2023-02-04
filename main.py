@@ -25,7 +25,7 @@ results = train(EPOCHS, model, train_gen, val_gen, 10, 2, 'training_2')
 
 test_loss(train_gen, model, hbb_yolov2_loss)
 
-results = train(EPOCHS, model, train_gen, val_gen, 10, 2, 'training_2')
+results = train(EPOCHS, model, train_gen, val_gen, 10, 2, hbb_yolov2_loss, 'training_2')
 
 plt.plot(results[0])
 plt.plot(results[1])
