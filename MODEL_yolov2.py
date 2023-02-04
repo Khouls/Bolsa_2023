@@ -163,7 +163,7 @@ def yolov2(IMAGE_H, IMAGE_W, BOXES_CELL, NUM_CLASSES):
 	x = Conv2D(BOXES_CELL * (4 + 1 + NUM_CLASSES), (1,1), strides=(1,1), padding='same', name='conv_23')(x)
 	# Yolo uses images on a 32 grid, so we reshape to match our grid
 	# Basically, reshape the output so it's a matrix following the grid, with each value being an array with the predicted boxes inside. In the predicted boxes, we have an array containing the predicted x1, y1, x1, y2, the confidence score followed by the individual probability of each class.
-	output = Reshape((IMAGE_W/32, IMAGE_H/32, BOXES_CELL, 4 + 1 + NUM_CLASSES))(x)
+	output = Reshape((int(IMAGE_W/32), int(IMAGE_H/32), BOXES_CELL, 4 + 1 + NUM_CLASSES))(x)
 
 	model = keras.models.Model(input_image, output)
 	return model

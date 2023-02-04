@@ -253,9 +253,9 @@ def augmentation_generator(yolo_dataset):
         ia_boxes = []
         for i in range(img.shape[0]):
             ia_bbs = [ia.BoundingBox(x1=bb[0],
-                                       y1=bb[1],
-                                       x2=bb[2],
-                                       y2=bb[3]) for bb in boxes[i]
+                                     y1=bb[1],
+                                     x2=bb[2],
+                                     y2=bb[3]) for bb in boxes[i]
                       if (bb[0] + bb[1] +bb[2] + bb[3] > 0)]
             ia_boxes.append(ia.BoundingBoxesOnImage(ia_bbs, shape=(1, 1)))
         # data augmentation
